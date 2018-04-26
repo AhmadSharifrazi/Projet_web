@@ -1,14 +1,14 @@
 <?php
 class PayementsController{
-	
-	private $_db; 
-	
+
+	private $_db;
+
 	public function __construct($db){
 		$this->_db = $db;
 	}
-	
+
 	public function run(){
-		
+
 		require_once(CHEMIN_VUES.'Payements.php');
 
 	}

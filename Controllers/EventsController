@@ -1,0 +1,12 @@
+<?php
+ class EventsController{
+   
+   public function__construct(){
+
+   }
+   public function run(){
+
+     require_once(CHEMIN_VUES.'Events.php')
+   }
+ }
+?>
