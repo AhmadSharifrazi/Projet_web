@@ -1,5 +1,5 @@
 <?php
- class ProfilController{
+ class ProflController{
 
    public function __construct(){
 

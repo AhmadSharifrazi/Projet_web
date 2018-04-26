@@ -9,14 +9,12 @@ class CibleController{
 	
 	public function run(){
 	
-		$this->_db->add_member($_POST['email'], $_POST['last_name'], $_POST['first_name'], $_POST['phone_number'], $_POST['account_number'], $_POST['profil_picture'], $validated, $training_no, $responsability_level, $adress));
+		$this->_db->add_workout_plan('endurance', '2018-02-25', '2018-02-26');
+		/*$this->_db->add_member($_POST['email'], $_POST['last_name'], $_POST['first_name'], $_POST['phone_number'], 
+		$_POST['account_number'], $_POST['profil_picture'], $_POST['adress']));
+		$this->_db->validate_member('schellensval@hotmail.com');
 		/*$tabMembers = $this->_db->select_members();*/
-		$nomFamille=$_POST['lastName'];
-		/*$firstName=$_POST['firstName'];
-		$phone=$_POST['phone'];
-		$email=$_POST['email'];
-		$adress=$_POST['adress'];
-		$account=$_POST['account'];
+		/*
 		#$photo=$_FILE['photo'];
 		$notification='';
 		

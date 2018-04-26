@@ -8,7 +8,7 @@
 
 	<p>Voici le membre que vous venez d'inscrire: .</p>
 	<p>Voici la liste des évenements: 
-	<p><?php echo $nomFamille ; ?>
+	
 	
 	<table id="tableBalises">
 				<thead>
@@ -26,7 +26,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php/* foreach ($tabMembers as $i => $member) { ?>
+					<?php /*foreach ($tabMembers as $i => $member) { ?>
 					<tr>
 					<td><span class="html"><?php echo $member->html_email() # Protection anti XSS à l'affichage ?></span></td>
 					<td><?php echo $member->html_first_name() # Protection anti XSS à l'affichage ?></td>		

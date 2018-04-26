@@ -21,7 +21,7 @@ class CibleModel{
 	}
 }
 ?>
- <--!suite à regarder
+ <!--suite à regarder
 <?php
 
 
