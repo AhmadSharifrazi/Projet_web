@@ -8,12 +8,12 @@ class CibleController{
 	}
 
 	public function run(){
+		#fonctionne plus qu'à vérifier que le newMember est bien dans la table et le mettre dans le PayementsController
+		#$this->_db->validate_member($_POST['newMember']);
+		#$this->_db->add_payement($_POST['newMemberInOrder']);   #A vérifier
+		#$this->_db->add_workout_plan($_POST['endurance'], $_POST['2018-02-25'], $_POST['2018-02-26']);
+		$this->_db->add_member($_POST['email'], $_POST['last_name'], $_POST['first_name'], $_POST['phone'], $_POST['account'], $_POST['profil_picture'], $_POST['adress']);
 
-		 $email = $_POST['Email'];
-		#$this->_db->add_workout_plan('endurance', '2018-02-25', '2018-02-26');
-		/*$this->_db->add_member($_POST['email'], $_POST['last_name'], $_POST['first_name'], $_POST['phone_number'],
-		$_POST['account_number'], $_POST['profil_picture'], $_POST['adress']));
-		$this->_db->validate_member('schellensval@hotmail.com');
 		/*$tabMembers = $this->_db->select_members();*/
 		/*
 		#$photo=$_FILE['photo'];

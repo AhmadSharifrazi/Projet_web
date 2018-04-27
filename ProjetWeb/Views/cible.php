@@ -7,7 +7,7 @@
 <body>
 
 	<p>Voici le membre que vous venez d'inscrire: .</p>
-	<p><?php echo $email?>
+	<p></p>
 	<p>Voici la liste des évenements:</p>
 
 

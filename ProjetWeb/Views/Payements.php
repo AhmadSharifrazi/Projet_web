@@ -9,14 +9,14 @@
 	<p></p>
 	<br><br><br>
 
-	<form method="POST" action="index.php?action=cible">
-		<p>Débuter une nouvelle année de cotisation: <input id="champs" type="text" name="newYearPayement" placeholder="Montant"/></p>
-		<p>Ajouter un payement de cotisation: <input id="champs" type="text" name="newMemberInOrder" placeholder="Email" /></p>
+	<form method="POST" action="index.php?action=Cible">
+		<p>Débuter une nouvelle année de cotisation: <input id="champs" type="text" name="newYearPayement" placeholder="Montant"/><input id="submit" type="submit" value="Commencer" /></p>
+		<p>Ajouter un payement de cotisation: <input id="champs" type="text" name="newMemberInOrder" placeholder="Email" /><input id="champs" type="submit" value="Ajouter" /></p>
 		<p>Voir la liste des membres qui ne sont pas en ordre: <input id="champs" type="submit" name="phone" value="Afficher"/></p>  #?
-		<p>Valider une inscription: <input id="champs" type="text" name="newMember" placeholder="Email"/></p>
-		<p>Modifier la responsabilité d'un utilisateur: <input id="champs" type="text" name="newResponsability" placeholder="Email" /></p> <input id="champs" type="text" name="newUserResponsability" placeholder="Nouvelle responsabilité" />
+		<p>Valider une inscription: <input id="champs" type="text" name="newMember" placeholder="Email"/><input id="champs" type="submit" value="Valider" /></p>
+		<p>Modifier la responsabilité d'un utilisateur: <input id="champs" type="text" name="newResponsability" placeholder="Email" />
+		<input id="champs" type="text" name="newUserResponsability" placeholder="Nouvelle responsabilité" /><input id="submit" type="submit" value="Modifier" /></p>
 		<br>
-		<input id="submit" type="submit" value="Envoyer" />
 	</form><br><br>
 </body>
 </html>

@@ -35,8 +35,8 @@
 		case 'Subscription':
 			require_once(CHEMIN_CONTROLEURS.'SubscriptionController.php');
 			$controller = new SubscriptionController($db);
-			break;	
-		case 'cible':
+			break;
+		case 'Cible':
 			require_once(CHEMIN_CONTROLEURS.'CibleController.php');
 			$controller = new CibleController($db);
 			break;

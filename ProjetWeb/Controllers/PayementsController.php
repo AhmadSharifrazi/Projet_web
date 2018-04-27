@@ -9,7 +9,7 @@ class PayementsController{
 
 	public function run(){
 
-		$this->_db->validate_member('xavier@gmail.com');
+
 		#$this->_db->add_payement('xavier@gmail.com', '2018', '150');
 
 		require_once(CHEMIN_VUES.'Payements.php');
