@@ -1,5 +1,5 @@
 <?php
- class ProfilController{
+ class ProflController{
 
    public function __construct(){
 
@@ -10,4 +10,3 @@
      require_once(CHEMIN_VUES.'Profil.php')
    }
  }
-?>
