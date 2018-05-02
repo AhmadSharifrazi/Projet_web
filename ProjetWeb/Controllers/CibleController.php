@@ -8,13 +8,19 @@ class CibleController{
 	}
 
 	public function run(){
-		#fonctionne plus qu'à vérifier que le newMember est bien dans la table et le mettre dans le PayementsController
-		#$this->_db->validate_member($_POST['newMember']);
-		#$this->_db->add_payement($_POST['newMemberInOrder']);   #A vérifier
-		#$this->_db->add_workout_plan($_POST['endurance'], $_POST['2018-02-25'], $_POST['2018-02-26']);
-		$this->_db->add_member($_POST['email'], $_POST['last_name'], $_POST['first_name'], $_POST['phone'], $_POST['account'], $_POST['profil_picture'], $_POST['adress']);
 
-		/*$tabMembers = $this->_db->select_members();*/
+		#je sais pas où mettre cet appel de méthode, mais elle marche. J'aimerais ne pas avoir à demander le numéro de l'event
+		if(!empty($_POST['event_no']) && !empty($_POST['newDescription'])){
+			$this->_db->modify_event($_POST['event_no'], $_POST['newDescription']);
+		}
+
+		if(!empty($_POST['email']) && !empty($_POST['event_no'])){
+			$this->_db->has_payed_event($_POST['email'], $_POST['event_no']);   #fonctionne aussi   mais mieux sans event_no
+		}
+
+	 $tabMembers = $this->_db->members_not_in_order();
+
+
 		/*
 		#$photo=$_FILE['photo'];
 		$notification='';

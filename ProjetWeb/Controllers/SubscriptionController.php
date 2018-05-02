@@ -9,8 +9,11 @@ class SubscriptionController{
 
 	public function run(){
 
-		#$this->_db->add_member("xavierLINET", "Linet", "Xavier", "04584694684", "BE64564645", NULL, "rue des aulnois");
-		require_once(CHEMIN_VUES.'Subscription.php'); 
+		if(!empty($_POST['email']) && !empty($_POST['mdp']) && !empty($_POST['last_name']) && !empty($_POST['first_name'])) {
+			$this->_db->add_member($_POST['email'], $_POST['mdp'], $_POST['last_name'], $_POST['first_name'], $_POST['phone'], $_POST['account'], $_POST['profil_picture'], $_POST['adress']);
+		}
+
+		require_once(CHEMIN_VUES.'Subscription.php');
 	}
 }
 ?>

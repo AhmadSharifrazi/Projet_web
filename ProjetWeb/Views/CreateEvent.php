@@ -7,8 +7,8 @@
 <body>
 	<h3>Veuillez renseigner les champs suivants pour créer un événement:</h3>
 	<br><br><br>
-	
-	<form method="POST" action="CreateEvent.php">
+
+	<form method="POST" action="index.php?action=CreateEvent">
 		<p>Titre: <input id="champs" type="text" name="title" /></p>
 		<p>Date de début: <input id="champs" type="text" name="start" /></p>
 		<p>Date de fin: <input id="champs" type="text" name="end" /></p>

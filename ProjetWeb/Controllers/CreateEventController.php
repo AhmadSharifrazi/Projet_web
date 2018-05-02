@@ -9,8 +9,10 @@ class CreateEventController{
 
 	public function run(){
 
-			#$this->_db->add_event("nouveau", "2012-12-21", NULL, "Monde", "finDuMonde.html", 10, NULL, NULL, "fin du monde");
-			#$this->_db->add_workout_plan("sprint", "2018-12-06", NULL);
+			if(!empty($_POST['title'])){
+				$this->_db->add_event($_POST['title'], $_POST['start'], $_POST['end'], $_POST['place'], $_POST['url'], $_POST['cost'], $_POST['description']);
+			}
+
 			require_once(CHEMIN_VUES.'CreateEvent.php');
 
 	}

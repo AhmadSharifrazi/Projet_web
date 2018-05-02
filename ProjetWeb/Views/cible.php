@@ -11,7 +11,7 @@
 	<p>Voici la liste des évenements:</p>
 
 
-<!--
+
 	<table id="tableBalises">
 				<thead>
 					<tr>
@@ -28,21 +28,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php /*foreach ($tabMembers as $i => $member) { ?>
+					<?php foreach ($tabMembers as $i => $member) { ?>
 					<tr>
 					<td><span class="html"><?php echo $member->html_email() # Protection anti XSS à l'affichage ?></span></td>
 					<td><?php echo $member->html_first_name() # Protection anti XSS à l'affichage ?></td>
 					<td><?php echo $member->html_last_name() ?></td>
-					<td><?php echo $member->html_phone_number() ?></td>
-					<td><?php echo $member->html_adress() ?></td>
-					<td><?php echo $member->html_account() ?></td>
-					<td><?php echo $member->html_profil_picture() ?></td>
-					<td><?php echo $member->validated() ?></td>
-					<td><?php echo $member->training_no() ?></td>
-					<td><?php echo $member->responsability_level() ?></td>
 					</tr>
+				<?php } ?>
 				</tbody>
-			</table>*/
-			?>
+			</table>
 </body>
 </html>

@@ -1,24 +1,39 @@
 <?php
+	session_start();
+
+
 	define('CHEMIN_VUES', 'Views/');
 	define('CHEMIN_CONTROLEURS','Controllers/');
 	define('DEV1', 'Xavier Linet');
 	define('DEV2', 'Ahmad Sharifrazi');
 	define('NUM_TEL', '8844230');
-	define('EMAIL', 'mlqkjsfdm@gmail.com');
+	define('EMAIL', 'mqsdf.com');
+	define('SESSION_ID',session_id());
 
 	# Require automatisé des classes de la couche modèle
-	/*function chargerClasse($classe) {
+	function chargerClasse($classe) {
 		require_once 'models/' . $classe . '.class.php';
 	}
-	spl_autoload_register('chargerClasse'); */
+	spl_autoload_register('chargerClasse');
 
-	 require_once 'models/Db.class.php';         // # à supprimer plus tard
 
 	#connexion à la db
 	$db = Db::getInstance();
 
+
+	# Pour le header : admin ou login selon que la variable de session 'authentifie' existe ou pas
+	if (empty($_SESSION['authentifie'])){
+		$actionloginadmin='login';
+		$libelleloginadmin='Login';
+	} else {
+		$actionloginadmin='admin';
+		$libelleloginadmin='Zone Admin';
+	}
+
+
 	# Ecrire ici le header de toutes pages HTML
 	require_once(CHEMIN_VUES.'Header.php');
+
 
 	# Tester si une variable GET 'action' est précisée dans l'URL index.php?action=...
 	$action = (isset($_GET['action'])) ? $_GET['action'] : 'default';
@@ -40,10 +55,14 @@
 			require_once(CHEMIN_CONTROLEURS.'CibleController.php');
 			$controller = new CibleController($db);
 			break;
+		case 'Login':
+			require_once(CHEMIN_CONTROLEURS.'LoginController.php');
+			$controller = new LoginController($db);
+			break;
 
 		default: # Par défaut, le contrôleur de l'accueil est sélectionné
 			require_once(CHEMIN_CONTROLEURS.'AccueilController.php');
-			$controller = new AccueilController($db);                                       //paramètre à supprimer, juste pour les tests
+			$controller = new AccueilController();
 			break;
 	}
 	# Exécution du contrôleur correspondant à l'action demandée
