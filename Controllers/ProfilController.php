@@ -1,13 +1,12 @@
 <?php
- class ProfilController{
+ class ProflController{
 
-   public function __construct($db){
-     		$this->_db = $db;
+   public function __construct(){
+
    }
 
    public function run(){
 
-     require_once(CHEMIN_VUES.'Profil.php');
+     require_once(CHEMIN_VUES.'Profil.php')
    }
  }
-?>

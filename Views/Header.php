@@ -18,7 +18,6 @@
 				<ul>
 					<li id="nav"><a href="index.php?action=CreateEvent">Créer un événement</a></li>
 					<li id="nav"><a href="index.php?action=Payements">Cotisations / Gestion</a></li>
-          <li id="nav"><a href="index.php?action=Profil" >Profil</a></li>
 				</ul>
 			</nav>
 		</header>

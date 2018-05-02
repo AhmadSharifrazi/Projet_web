@@ -61,8 +61,8 @@
 			break;
 
 		default: # Par défaut, le contrôleur de l'accueil est sélectionné
-			require_once(CHEMIN_CONTROLEURS.'LoginController.php');
-			$controller = new LoginController($db);
+			require_once(CHEMIN_CONTROLEURS.'AccueilController.php');
+			$controller = new AccueilController();
 			break;
 	}
 	# Exécution du contrôleur correspondant à l'action demandée

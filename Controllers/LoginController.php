@@ -37,7 +37,7 @@ class LoginController {
 			die();
 		}
 
-		require_once(CHEMIN_VUES . 'Acceuil.php');
+		require_once(CHEMIN_VUES . 'Login.php');
 	}
 }
 ?>
