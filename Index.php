@@ -1,11 +1,10 @@
 <?php
 	session_start();
 
-
 	define('CHEMIN_VUES', 'Views/');
 	define('CHEMIN_CONTROLEURS','Controllers/');
 	define('DEV1', 'Xavier Linet');
-	define('DEV2', 'Ahmad Sharifrazi');
+	define('DEV2', 'Ahmad Sharifrazi');    #à mettre dans config.properties
 	define('NUM_TEL', '8844230');
 	define('EMAIL', 'mqsdf.com');
 	define('SESSION_ID',session_id());
@@ -22,7 +21,7 @@
 
 
 	# Pour le header : admin ou login selon que la variable de session 'authentifie' existe ou pas
-	if (empty($_SESSION['authentifie'])){
+	if (empty($_SESSION['role'])){
 		$actionloginadmin='login';
 		$libelleloginadmin='Login';
 	} else {
@@ -58,6 +57,10 @@
 		case 'Login':
 			require_once(CHEMIN_CONTROLEURS.'LoginController.php');
 			$controller = new LoginController($db);
+			break;
+		case 'Logout':
+			require_once(CHEMIN_CONTROLEURS.'LogoutController.php');
+			$controller = new LogoutController();
 			break;
 
 		default: # Par défaut, le contrôleur de l'accueil est sélectionné

@@ -18,7 +18,9 @@ class CibleController{
 			$this->_db->has_payed_event($_POST['email'], $_POST['event_no']);   #fonctionne aussi   mais mieux sans event_no
 		}
 
-	 $tabMembers = $this->_db->members_not_in_order();
+		$tabEvents = $this->_db->select_events();
+
+
 
 
 		/*

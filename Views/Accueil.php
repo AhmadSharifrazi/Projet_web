@@ -7,7 +7,7 @@
 			<form method="POST" action="index.php?action=Login">
 				<p>Se connecter:</p>
 				<input type="text" name="pseudo" placeholder="Email" />
-				<input type="text" name="mdp" method ="POST" width=25 placeholder="Mot de passe"/>
+				<input type="password" name="password" method ="POST" width=25 placeholder="Mot de passe"/>
 				<input type="submit" value="Se connecter" />
 			</form>
 			</li>

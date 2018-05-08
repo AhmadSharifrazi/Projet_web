@@ -13,7 +13,7 @@
 #connection{
 	float: right;
 	display: inline;
-	padding: 10px; 	
+	padding: 10px;
 }
 
 #champConnection{
@@ -25,12 +25,17 @@
 	float: right;
 }
 
+#erreur{
+	text-align: center;
+	color: red;
+}
+
 #champs{
-	
+
 }
 
 #notification{
-	
+
 }
 
 .notification{

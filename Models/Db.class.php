@@ -14,6 +14,7 @@ class Db{
 		}
 	}
 
+
 	public static function getInstance(){
         if (is_null(self::$instance)) {
             self::$instance = new Db();
@@ -21,61 +22,78 @@ class Db{
         return self::$instance;
     }
 
+
 	public function members_not_in_order(){
-		$query = 'SELECT first_name, last_name, members.email FROM members, payements WHERE members.email = payements.email AND payements.amount_payed IS NULL ';
-		$ps = $this->_db->prepare($query);
-		$ps->execute();
-	 	#$ps = $this->_db->query($query);
-		#if($ps->rowcount() == 0) $notification = "Tous le monde est en ordre de paiement";
+		$query1 = 'SELECT max(year) FROM subscriptions';
+		$ps1 = $this->_db->prepare($query1);
+		$ps1->execute();
+		$row = $ps1->fetch();
+		$currentYear = $row[0];
 
+		$query2 = 'SELECT members.email FROM members WHERE members.email NOT IN (SELECT email FROM payements WHERE year = :currentYear)';
+		$ps2 = $this->_db->prepare($query2);
+		$ps2->bindValue(':currentYear', $currentYear, PDO::PARAM_INT);
+		$ps2->execute();
+		#if($ps2->rowcount() == 0) return 0;
 		$tableau = array();
-		# Parcours de l'ensemble des résultats
-		# Construction d'un tableau d'objet(s) de la classe Livre
-		# Si le tableau est vide, on ne rentre pas dans le while
-		while ($row = $ps->fetch()) {
-			var_dump($row);
-			$tableau[] = new Member($row->first_name, $row->last_name, $row->email);
-		}
-		# Pour debug : affichage du tableau à renvoyer
-	  #var_dump($tableau);
-		return $tableau;
 
+		# Parcours de l'ensemble des résultats
+		# Construction d'un tableau d'objet(s) de la classe Member
+		while ($row = $ps2->fetch()) {
+			$tableau[] = new Member($row[0]);
+		}
+		return $tableau;
 	}
+
 
 	public function select_events(){
-
-		$query = 'SELECT * FROM events'.
+		$query = 'SELECT * FROM events';
 		$ps = $this->_db->prepare($query);
 		$ps->execute();
 
 		$tableau = array();
 
-		while ($row->fetch()){
-			$tableau[] = new Event($row->titre, $row->starting_date, $row->description);
+		while ($row = $ps->fetch()){
+			$tableau[] = new Event($row[0], $row[1], $row[2]);
 		}
 		return $tableau;
 	}
 
 
-	public function login($email, $mdp){
-		$query = 'SELECT mot_de_passe FROM members WHERE email = :email';
+#fonctionne
+	public function login($email, $psw){
+		$query1 = 'SELECT validated FROM members WHERE email = :email';
+		$ps1 = $this->_db->prepare($query1);
+		$ps1->bindValue(':email', $email, PDO::PARAM_STR);
+		$ps1->execute();
+		$validated = $ps1->fetch();
+		if($validated[0] == 0) return false;
+
+		$query2 = 'SELECT password FROM members WHERE email = :email';
+		$ps2 = $this->_db->prepare($query2);
+		$ps2->bindValue(':email', $email, PDO::PARAM_STR);
+		$ps2->execute();
+		$row = $ps2->fetch();
+		$hash = $row[0];
+
+		return password_verify($psw, $hash);
+	}
+
+
+	public function get_Responsability_level($email){
+		$query = 'SELECT responsability_level FROM members WHERE email = :email';
 		$ps = $this->_db->prepare($query);
 		$ps->bindValue(':email', $email, PDO::PARAM_STR);
 		$ps->execute();
-
-		#$ps->fetch()
-		var_dump($ps->fetch()->mot_de_passe);
-		if($ps->rowcount() == 0) return false;
-		#$hash = $ps->fetch()->mot_de_passe;
-		#var_dump($hash);
-		#return password_verify($mdp, $hash);
-		return $mdp = $hash;
+		$responsability_level = $ps->fetch();
+		return $responsability_level;
 	}
+
 
 	#fonctionne
 	public function add_event($title, $starting_date, $ending_date, $place, $url, $approximative_cost, $description){
 		$query = 'INSERT INTO events(title, starting_date, ending_date, place, url, approximative_cost, description)
-		VALUES(:title, :starting_date, :ending_date, :place,	:url, :approximative_cost, :description)';
+		VALUES(:title, :starting_date, :ending_date, :place, :url, :approximative_cost, :description)';
 		$ps = $this->_db->prepare($query);
 
 		// On lie les variables définie au-dessus au paramètres de la requête préparée
@@ -89,6 +107,7 @@ class Db{
 		//On exécute la requête
 		$ps->execute();
 	}
+
 
 	#fonctionne
 	public function add_workout_plan($workout_name, $starting_date, $ending_date){
@@ -104,24 +123,31 @@ class Db{
 		$ps->execute();
 	}
 
-	#fonctionne et appelle la même page (plus qu'à afficher un message)
+
+	#pourrait dire que le membre est déjà validé
 	public function validate_member($email){
-		//if()
 		$query = 'UPDATE members SET validated = true WHERE email = :email';
 		$ps = $this->_db->prepare($query);
 		$ps->bindValue(':email', $email, PDO::PARAM_STR);
 		$ps->execute();
+		try {
+			$row = $ps->fetch();
+		}
+		catch(PDOException $e){
+ 			return 'Cette adresse email n\'est pas dans la base de données';
+		}
 	}
 
+
 	#fonctionne
-	public function add_member($email, $mdp, $last_name, $first_name, $phone_number, $account_number, $profil_picture, $adress) {
-		$query = 'INSERT INTO members (email, mot_de_passe, last_name, first_name, phone_number, account_number, profil_picture, adress)
-		VALUES (:email,:mdp, :last_name, :first_name, :phone_number, :account_number, :profil_picture, :adress)';
+	public function add_member($email, $psw, $last_name, $first_name, $phone_number, $account_number, $profil_picture, $adress) {
+		$query = 'INSERT INTO members (email, password, last_name, first_name, phone_number, account_number, profil_picture, adress)
+		VALUES (:email,:password, :last_name, :first_name, :phone_number, :account_number, :profil_picture, :adress)';
 		$ps = $this->_db->prepare($query);
 
 		// On lie les variables définie au-dessus au paramètres de la requête préparée
 		$ps->bindValue(':email', $email, PDO::PARAM_STR);
-		$ps->bindValue(':mdp', $mdp, PDO::PARAM_STR);
+		$ps->bindValue(':password', password_hash($psw, PASSWORD_BCRYPT), PDO::PARAM_STR);
 		$ps->bindValue(':last_name', $last_name, PDO::PARAM_STR);
 		$ps->bindValue(':first_name', $first_name, PDO::PARAM_STR);
 		$ps->bindValue(':phone_number', $phone_number, PDO::PARAM_STR);
@@ -132,34 +158,50 @@ class Db{
 		$ps->execute();
 	}
 
-	#doit envoyer un mail il me semble   + demander si sûr
-	public function NewYearPayement($cost){
-		$query='INSERT INTO subscriptions(amount) VALUES(:cost)';
-		$ps = $this->_db->prepare($query);
 
-		// On lie les variables définie au-dessus au paramètres de la requête préparée
-		$ps->bindValue(':cost', $cost, PDO::PARAM_STR);
-		//On exécute la requête
-		$ps->execute();
+	#doit envoyer un mail + demander si sûr, si >999 affiche une erreur, si pas chiffre affiche une erreur
+	public function NewYearPayement($cost){
+		try{
+			$query='INSERT INTO subscriptions(amount) VALUES(:cost)';
+			$ps = $this->_db->prepare($query);
+
+			// On lie les variables définie au-dessus au paramètres de la requête préparée
+			$ps->bindValue(':cost', $cost, PDO::PARAM_STR);
+			//On exécute la requête
+			$ps->execute();
+		}
+		catch(PDOException $e){
+			return 'Le montant indiqué n\'est pas valide';
+		}
 	}
 
+
+	//si email pas dans les membres affiche une erreur, si montant >999 affiche une erreur
 	public function add_payement($email, $amount){
-		$query1='SELECT max(year) FROM subscriptions';
+		$query1 = 'SELECT email FROM members WHERE email = :email';
 		$ps1 = $this->_db->prepare($query1);
+		$ps1->bindValue(':email', $email, PDO::PARAM_STR);
 		$ps1->execute();
 		$row = $ps1->fetch();
+		if ($row == null) return 'Cette adresse email n\'est pas dans la base de données';
+
+		$query2='SELECT max(year) FROM subscriptions';
+		$ps2 = $this->_db->prepare($query2);
+		$ps2->execute();
+		$row = $ps2->fetch();
 		$currentYear = $row[0];
 
-		$query2='INSERT INTO payements(email, year, amount_payed) VALUES (:email, :currentYear, :amount)';
-		$ps2 = $this->_db->prepare($query2);
+		$query3='INSERT INTO payements(email, year, amount_payed) VALUES (:email, :currentYear, :amount)';
+		$ps3 = $this->_db->prepare($query3);
 
 		// On lie les variables définie au-dessus au paramètres de la requête préparée
-		$ps2->bindValue(':email', $email, PDO::PARAM_STR);
-		$ps2->bindValue(':currentYear', $currentYear, PDO::PARAM_INT);
-		$ps2->bindValue(':amount', $amount, PDO::PARAM_STR);
+		$ps3->bindValue(':email', $email, PDO::PARAM_STR);
+		$ps3->bindValue(':currentYear', $currentYear, PDO::PARAM_INT);
+		$ps3->bindValue(':amount', $amount, PDO::PARAM_STR);
 		//On exécute la requête
-		$ps2->execute();
+		$ps3->execute();
 	}
+
 
 	public function modify_responsability($email, $newResponsability){
 		$query = 'UPDATE members SET responsability_level = :newResponsability WHERE email = :email';
@@ -172,6 +214,7 @@ class Db{
 		$ps->execute();
 	}
 
+
 	public function modify_event($event_no, $newDescription){
 		$query = 'UPDATE events SET description = :newDescription WHERE event_no = :event_no';
 		$ps = $this->_db->prepare($query);
@@ -182,6 +225,7 @@ class Db{
 		//On exécute la requête
 		$ps->execute();
 	}
+
 
 	public function has_payed_event($email, $event_no){
 		$query = 'UPDATE registered_people SET has_payed = 1 WHERE email = :email AND event_no = :event_no';

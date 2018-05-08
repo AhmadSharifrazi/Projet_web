@@ -11,7 +11,7 @@
 
 	<form method="POST" action="index.php?action=Subscription">
 		<p>Nom: <input id="champs" type="text" name="last_name" /></p>
-		<p>Mot de passe: <input id="champs" type="password" name="mdp" /></p>
+		<p>Mot de passe: <input id="champs" type="password" name="psw" /></p>
 		<p>Prénom: <input id="champs" type="text" name="first_name" /></p>
 		<p>Numéro de téléphone: <input id="champs" type="text" name="phone" /></p>
 		<p>Email: <input id="champs" type="text" name="email" /></p>

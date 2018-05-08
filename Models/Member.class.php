@@ -24,7 +24,7 @@ class Member {
 		$this->_training_no = 1;
 		$this->_responsability_level = "member";
 	}*/
-
+/*
 	public function __construct($first_name,$last_name,$email){
 		$this->_first_name = $first_name;
 		$this->_last_name = $last_name;
@@ -36,6 +36,26 @@ class Member {
 		$this->_validated = false;
 		$this->_training_no = 1;
 		$this->_responsability_level = "member";
+	}
+*/
+
+
+	public function __construct($email){
+		$this->_first_name = null;
+		$this->_last_name = null;
+		$this->_email = $email;
+		$this->_phone_number = null;
+		$this->_adress = null;
+		$this->_account_number = null;
+		$this->_profil_picture = null;
+		$this->_validated = false;
+		$this->_training_no = 1;
+		$this->_responsability_level = "member";
+	}
+
+	public function toString(){
+		#$email =	html_email();           comprends pas pourquoi ça marche pas 
+		return htmlspecialchars($this->_email);
 	}
 
 	public function email(){

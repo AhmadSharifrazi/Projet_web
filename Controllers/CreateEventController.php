@@ -10,7 +10,8 @@ class CreateEventController{
 	public function run(){
 
 			if(!empty($_POST['title'])){
-				$this->_db->add_event($_POST['title'], $_POST['start'], $_POST['end'], $_POST['place'], $_POST['url'], $_POST['cost'], $_POST['description']);
+				$this->_db->add_event(htmlspecialchars($_POST['title']), htmlspecialchars($_POST['start']), htmlspecialchars($_POST['end']), htmlspecialchars($_POST['place']), htmlspecialchars($_POST['url']),
+				htmlspecialchars($_POST['cost']), htmlspecialchars($_POST['description']));
 			}
 
 			require_once(CHEMIN_VUES.'CreateEvent.php');
